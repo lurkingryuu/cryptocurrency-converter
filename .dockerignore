@@ -1,0 +1,21 @@
+# Exclude files and directories commonly found in Node.js projects
+node_modules
+npm-debug.log
+
+# Exclude files and directories commonly found in Python projects
+__pycache__
+*.pyc
+
+# Exclude editor-specific files
+.vscode
+.idea
+
+# Exclude build artifacts
+dist
+build
+
+# config files
+*.env*
+*.log
+.pretierrc
+.eslintrc
