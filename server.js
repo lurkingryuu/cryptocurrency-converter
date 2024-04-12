@@ -8,6 +8,7 @@ const { port, host, cron, api } = require('./config/config')
 const { updateCoins } = require('./src/services/crypto_update.service')
 const { errorHandler, errorConvert } = require('./src/middleware/error')
 const convert = require('./src/routes/convert.route')
+const companies = require('./src/routes/companies.route')
 
 mongoose.connect(uri()).catch((err) => {
     if (err) {
@@ -28,12 +29,11 @@ app.get('/ping', (req, res) => {
 })
 
 app.use(api.prefix, convert)
+app.use(api.prefix, companies)
 
-// post middleware
-app.use(errorConvert, errorHandler)
+app.use(errorConvert, errorHandler) // error handling middleware
 
 if (cron.enabled) {
-    // updateCoins(); // trigger once at the start
     cronjob.schedule(cron.pattern, async () => {
         await updateCoins()
     })

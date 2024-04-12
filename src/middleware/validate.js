@@ -49,6 +49,48 @@ const validateConvert = async (req, res, next) => {
     return res.status(httpStatus.BAD_REQUEST).json({ error: errmsg })
 }
 
+const validateCompaniesRequest = [
+    validator
+        .body('currency')
+        .notEmpty()
+        .withMessage('currency is required')
+        .isString()
+        .withMessage('currency must be a string')
+        /*
+          validate if the currency is either BTC or ETH
+          Currently, the API only supports these two currencies
+          This validation can be extended / removed to support more currencies
+        */
+        .custom((value) => {
+            const supportedCurrencies = ['bitcoin', 'ethereum']
+            if (!supportedCurrencies.includes(value.toLowerCase())) {
+                const errmsg = `currency must be either ${supportedCurrencies.join(
+                    ' or '
+                )}`
+
+                throw new customError(httpStatus.BAD_REQUEST, errmsg)
+            }
+            return true
+        }),
+]
+
+const validateCompanies = async (req, res, next) => {
+    const errors = validateCompaniesRequest.map((validation) =>
+        validation.run(req)
+    )
+    await Promise.all(errors)
+    const result = validator.validationResult(req)
+    if (result.isEmpty()) {
+        return next()
+    }
+    const errmsg = result
+        .array()
+        .map((err) => err.msg)
+        .join(', ')
+    return res.status(httpStatus.BAD_REQUEST).json({ error: errmsg })
+}
+
 module.exports = {
     validateConvert,
+    validateCompanies,
 }
