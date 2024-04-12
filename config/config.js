@@ -1,4 +1,3 @@
-// config.js
 require('dotenv').config()
 
 module.exports = {
@@ -6,11 +5,11 @@ module.exports = {
     // mongodb
     database: {
         // for local mongodb
-        host: process.env.MONGODB_HOST,
+        host: process.env.MONGODB_HOST || 'localhost',
         port: process.env.MONGODB_PORT || 27017,
-        username: process.env.MONGODB_USERNAME,
-        password: process.env.MONGODB_PASSWORD,
-        db_name: process.env.MONGODB_DB_NAME,
+        username: process.env.MONGODB_USERNAME || 'root',
+        password: process.env.MONGODB_PASSWORD || 'root',
+        db_name: process.env.MONGODB_DB_NAME || 'crypto',
 
         // for mongodb atlas or some other cloud mongodb
         url: process.env.MONGODB_URL,

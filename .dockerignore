@@ -1,3 +1,5 @@
+Dockerfile
+
 # Exclude files and directories commonly found in Node.js projects
 node_modules
 npm-debug.log

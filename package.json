@@ -1,15 +1,15 @@
 {
     "name": "cryptocurrency_converter",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A simple cryptocurrency converter using CoinGecko API",
-    "main": "server.js",
+    "main": "index.js",
     "env-file": ".env",
     "scripts": {
         "format:check": "prettier --check .",
         "format:write": "prettier --write .",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "NODE_ENV=production nodemon server.js",
-        "start": "NODE_ENV=production node server.js"
+        "dev": "NODE_ENV=development nodemon index.js",
+        "start": "NODE_ENV=production node index.js"
     },
     "keywords": [],
     "author": "Karthikeya (lurkingryuu)",

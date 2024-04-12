@@ -11,6 +11,7 @@ yarn-error.log
 **/.vscode/*
 
 # Distribution / packaging
+data/
 bin/
 build/
 develop-eggs/

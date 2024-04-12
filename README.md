@@ -39,6 +39,8 @@ Other environment variables can be found in the `.env.example` [file](.env.examp
 
 ## Running the Application in Docker
 
+### Docker ce
+
 1. Clone the repository - same as above
 2. Build the Docker image
 3. Configure the environment variables - same as above
@@ -65,6 +67,41 @@ CONTAINER ID   IMAGE                    COMMAND                  CREATED        
 ```bash
 docker stop crypto_converter-1
 docker rm crypto_converter-1
+```
+
+## Docker Compose
+
+1. Clone the repository - same as above
+2. Configure the environment variables - according to the `docker-compose.yaml` [file](docker-compose.yaml)
+3. Run the Docker Compose
+
+```bash
+docker-compose build
+docker-compose up -d
+```
+
+4. Check the health of the API
+
+```bash
+$ docker ps
+
+CONTAINER ID   IMAGE                          COMMAND                  CREATED         STATUS                   PORTS                     NAMES
+f3640494709e   cryptocurrency_converter-app   "npm run start"          7 minutes ago   Up 7 minutes (healthy)   0.0.0.0:3000->3000/tcp    crypto-converter-app
+91a941d68da3   mongo:6.0.15-rc0-jammy         "docker-entrypoint.s…"   7 minutes ago   Up 7 minutes             27017/tcp                 crypto-converter-db
+```
+
+Optionally, you can check the logs of the API container
+
+```bash
+docker compose logs -f
+```
+
+5. Access the API at `http://localhost:3000`
+6. Stop and remove the containers after use
+
+```bash
+docker-compose down --volumes
+rm -rf ./data
 ```
 
 ## API Reference

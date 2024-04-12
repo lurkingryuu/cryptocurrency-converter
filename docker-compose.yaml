@@ -1,0 +1,37 @@
+services:
+    # container named coin-converter-app
+    app:
+        container_name: crypto-converter-app
+        # restart: unless-stopped
+        build:
+            context: .
+            dockerfile: Dockerfile
+        environment:
+            - PORT=${PORT:-3000}
+
+            # Comment the code below if you are using atlas or another service
+            - MONGODB_USERNAME=${MONGODB_USERNAME:-root}
+            - MONGODB_PASSWORD=${MONGODB_PASSWORD:-root}
+            - MONGODB_HOST=db
+            - MONGODB_PORT=27017
+            - MONGODB_DATABASE=${MONGODB_DATABASE:-crypto}
+
+            # Uncomment the code below if you are using atlas or another service
+            # - MONGODB_URI=${MONGODB_URI}
+        ports:
+            - 3000:${PORT:-3000}
+        depends_on:
+            - db
+
+    # Comment the code below if you are using atlas or another service
+    db:
+        container_name: crypto-converter-db
+        restart: unless-stopped
+        image: mongo:6.0.15-rc0-jammy
+        volumes:
+            - ./data/db:/data/db
+            - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME:-root}
+            MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD:-root}
+            MONGO_INITDB_DATABASE: ${MONGODB_DATABASE:-crypto}

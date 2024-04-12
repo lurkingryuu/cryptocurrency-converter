@@ -22,4 +22,4 @@ ENV NODE_ENV=production
 EXPOSE $PORT
 
 # Start the application
-ENTRYPOINT ["npm", "start"]
+ENTRYPOINT ["npm", "run", "start"]
