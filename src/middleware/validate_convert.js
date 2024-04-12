@@ -1,0 +1,38 @@
+const validator = require("express-validator");
+const httpStatus = require("http-status");
+const luxon = require("luxon");
+const customError = require("../../utils/customError");
+
+
+const validateConvert = [
+  validator.body("fromCurrency")
+    .notEmpty().withMessage("fromCurrency is required")
+    .isString().withMessage("fromCurrency must be a string"),
+  validator.body("toCurrency")
+    .notEmpty().withMessage("toCurrency is required")
+    .isString().withMessage("toCurrency must be a string"),
+  validator.body("date")
+    .notEmpty().withMessage("date is required")
+    .isString().withMessage("date must be a string")
+    .custom((value) => {
+    if (!luxon.DateTime.fromFormat(value, "dd-MM-yyyy").isValid) {
+      throw new customError(httpStatus.BAD_REQUEST, "Invalid date format, specify DD-MM-YYYY and a valid date");
+    }
+    return true;
+  }),
+];
+
+const validate = async (req, res, next) => {
+    const errors = validateConvert.map((validation) => validation.run(req));
+    await Promise.all(errors);
+    const result = validator.validationResult(req);
+    if (result.isEmpty()) {
+        return next();
+    }
+    const errmsg = result.array().map((err) => err.msg).join(", ");
+    return res.status(httpStatus.BAD_REQUEST).json({ error: errmsg });
+}
+
+module.exports = {
+    validate
+};

@@ -2,7 +2,6 @@ const { database } = require('../config/config');
 
 function uri() {
     if (!database.url && (!database.username || !database.password || !database.host || !database.port)) {
-        console.log(process.env);
         throw new Error('Invalid database configuration');
     }
     let uri;

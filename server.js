@@ -1,9 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cronjob = require('node-cron');
+const bodyParser = require('body-parser');
 const { uri } = require('./utils/db_uri');
-const { port, host, cron } = require('./config/config');
+const { port, host, cron, api } = require('./config/config');
 const { updateCoins } = require('./src/services/crypto_update.service');
+const { errorHandler, errorConvert } = require('./src/middleware/error');
+const convert = require('./src/routes/convert.route');
 
 
 mongoose.connect(uri()).catch((err) => {
@@ -18,14 +21,26 @@ const db = mongoose.connection;
 
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+
 app.get('/ping', (req, res) => {
     res.status(200);
     res.send('Pong!');
 });
 
+app.use(api.prefix, convert);
+
+
+// post middleware
+app.use(
+    errorConvert,
+    errorHandler
+);
 
 if (cron.enabled) {
-    updateCoins(); // trigger once at the start
+    // updateCoins(); // trigger once at the start
     cronjob.schedule(cron.pattern, async () => {
         await updateCoins();
     });
