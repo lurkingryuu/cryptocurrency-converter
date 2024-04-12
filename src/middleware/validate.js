@@ -3,7 +3,7 @@ const httpStatus = require('http-status')
 const luxon = require('luxon')
 const customError = require('../../utils/customError')
 
-const validateConvert = [
+const validateConvertRequest = [
     validator
         .body('fromCurrency')
         .notEmpty()
@@ -33,8 +33,10 @@ const validateConvert = [
         }),
 ]
 
-const validate = async (req, res, next) => {
-    const errors = validateConvert.map((validation) => validation.run(req))
+const validateConvert = async (req, res, next) => {
+    const errors = validateConvertRequest.map((validation) =>
+        validation.run(req)
+    )
     await Promise.all(errors)
     const result = validator.validationResult(req)
     if (result.isEmpty()) {
@@ -48,5 +50,5 @@ const validate = async (req, res, next) => {
 }
 
 module.exports = {
-    validate,
+    validateConvert,
 }
