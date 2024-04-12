@@ -1,5 +1,5 @@
 // config.js
-require('dotenv').config();
+require('dotenv').config()
 
 module.exports = {
     // Database configuration
@@ -42,4 +42,4 @@ module.exports = {
         level: 'info',
         file: 'logs/app.log',
     },
-};
+}
