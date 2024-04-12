@@ -1,0 +1,10 @@
+repos:
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.3.0
+    hooks:
+      - id: prettier
+        name: prettier
+        entry: prettier
+        language: node
+        types: [javascript, css, html]
+        args: ["--trailing-comma", "es5", "--tab-width", "4", "--no-semi", "--single-quote"]
