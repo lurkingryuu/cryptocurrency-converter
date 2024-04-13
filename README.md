@@ -7,6 +7,10 @@ It uses Express.js as the server framework and MongoDB for data storage.
 This API also saves the available cryptocurrencies every hour in database to avoid calling the external API multiple times.
 Also provides functionality to get the list of companies holding the currency.
 
+## Author
+
+`Yelisetty Karthikeya S M`, aka [lurkingryuu](https://github.com/lurkingryuu)
+
 ## Running the Application Locally
 
 ### Installation
@@ -61,7 +65,6 @@ CONTAINER ID   IMAGE                    COMMAND                  CREATED        
 ```
 
 6. Access the API at `http://localhost:8080`
-
 7. Stop and remove the container after use
 
 ```bash
@@ -111,6 +114,14 @@ rm -rf ./data
 The APIs can be run in Postman using the collection provided [here](https://www.postman.com/lurkingryuu-team/workspace/lurkingryuu-workspace/collection/19693177-7d91ae5d-ebdc-4f31-8fd0-916f86644e15?action=share&creator=19693177)
 
 The Documentation can be found [here](https://documenter.getpostman.com/view/19693177/2sA3Bhfapw).
+
+### Hosted API
+
+The API is hosted on azure based on the workflow in the repository and can be accessed [koinx.lurkingryuu.me](https://koinx.lurkingryuu.me)
+
+Alternate link: [koinx.azurewebsites.net](https://koinx.azurewebsites.net)
+
+<details><summary>Click to learn more about the API</summary>
 
 ## Endpoints
 
@@ -184,3 +195,5 @@ Content-Type: application/json
     ...
 ]
 ```
+
+</details>
