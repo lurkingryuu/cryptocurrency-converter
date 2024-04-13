@@ -40,6 +40,4 @@ const logger = winston.createLogger({
     transports,
 })
 
-logger.info(`Logging initialized at ${logging.level} level.`)
-
 module.exports = logger

@@ -4,7 +4,7 @@ const logger = require('../../utils/logger')
 const shortFormat =
     ':remote-addr :method :url :status :res[content-length] - :response-time ms'
 const longFormat =
-    ':remote-addr :method :url :status :res[content-length] - :response-time ms - message: :message'
+    ':remote-addr :method :url :status :res[content-length] - :response-time ms - message: :response-time ms'
 
 const shortFormatMiddleware = morgan(shortFormat, {
     stream: { write: (message) => logger.http(message.trim()) },

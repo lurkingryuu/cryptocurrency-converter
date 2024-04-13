@@ -89,7 +89,7 @@ const convert = async (from, to, date) => {
             )
         }
 
-        return rates1[base] / rates2[base]
+        return { rate: rates1[base] / rates2[base] }
     }
 }
 

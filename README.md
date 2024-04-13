@@ -109,6 +109,8 @@ rm -rf ./data
 
 ## API Reference
 
+Go to [Endpoints](#endpoints) for the quick reference.
+
 ### Postman
 
 The APIs can be run in Postman using the collection provided [here](https://www.postman.com/lurkingryuu-team/workspace/lurkingryuu-workspace/collection/19693177-7d91ae5d-ebdc-4f31-8fd0-916f86644e15?action=share&creator=19693177)
@@ -120,8 +122,6 @@ The Documentation can be found [here](https://documenter.getpostman.com/view/196
 The API is hosted on azure based on the workflow in the repository and can be accessed [koinx.lurkingryuu.me](https://koinx.lurkingryuu.me)
 
 Alternate link: [koinx.azurewebsites.net](https://koinx.azurewebsites.net)
-
-<details><summary>Click to learn more about the API</summary>
 
 ## Endpoints
 
@@ -166,7 +166,9 @@ POST /api/convert
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-176558.73727068843
+{
+    "rate": 176558.73727068843
+}
 ```
 
 ### POST /api/companies-holding
@@ -179,7 +181,7 @@ This endpoint is used to get the list of companies holding the currency in desce
 POST /api/companies-holding
 
 {
-    "currency": "bitcoin"
+    "currency": "ethereum"
 }
 ```
 
@@ -189,11 +191,11 @@ POST /api/companies-holding
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-[
-    "MicroStrategy",
-    "Tesla",
-    ...
-]
+{
+    "count": 2,
+    "companies": [
+        "Meitu Inc",
+        "Mogo Inc."
+    ]
+}
 ```
-
-</details>

@@ -24,9 +24,10 @@ const getCompanies = async (crypto) => {
     }
     try {
         const response = await axios.request(options)
-        return response.data.companies.map((company) => {
+        const companies = response.data.companies.map((company) => {
             return company.name
         })
+        return { count: companies.length, companies }
     } catch (error) {
         const response = error.response
         throw new customError(

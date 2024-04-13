@@ -19,6 +19,7 @@ const errorHandler = (err, req, res, next) => {
     }
 
     logger.error(err.message)
+    logger.info(typeof err.message)
 
     const response = {
         error: {
