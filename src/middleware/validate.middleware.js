@@ -63,7 +63,7 @@ const validateCompaniesRequest = [
         */
         .custom((value) => {
             const supportedCurrencies = ['bitcoin', 'ethereum']
-            if (!supportedCurrencies.includes(value.toLowerCase())) {
+            if (!supportedCurrencies.includes(value?.toLowerCase())) {
                 const errmsg = `currency must be either ${supportedCurrencies.join(
                     ' or '
                 )}`
