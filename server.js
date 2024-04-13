@@ -4,9 +4,16 @@ const bodyParser = require('body-parser')
 const httpStatus = require('http-status')
 const { cron, api, cors } = require('./config/config')
 const { updateCoins } = require('./src/services/crypto_update.service')
-const { errorHandler, errorConvert } = require('./src/middleware/error')
+const {
+    errorHandler,
+    errorConvert,
+} = require('./src/middleware/error.middleware')
 const convert = require('./src/routes/convert.route')
 const companies = require('./src/routes/companies.route')
+const {
+    shortFormatMiddleware,
+    longFormatMiddleware,
+} = require('./src/middleware/morgan.middleware')
 
 const app = express()
 
@@ -21,6 +28,9 @@ app.use((req, res, next) => {
     )
     next()
 })
+
+app.use(shortFormatMiddleware)
+app.use(longFormatMiddleware)
 
 app.get('/ping', (req, res) => {
     res.status(httpStatus.OK).send('Pong!')

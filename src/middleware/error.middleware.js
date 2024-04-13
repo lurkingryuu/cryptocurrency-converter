@@ -1,5 +1,6 @@
 const httpStatus = require('http-status')
 const customError = require('../../utils/customError')
+const logger = require('../../utils/logger')
 
 const errorConvert = (err, req, res, next) => {
     if (err instanceof customError) {
@@ -17,7 +18,7 @@ const errorHandler = (err, req, res, next) => {
         message = httpStatus[httpStatus.INTERNAL_SERVER_ERROR]
     }
 
-    console.error(err.message)
+    logger.error(err.message)
 
     const response = {
         error: {

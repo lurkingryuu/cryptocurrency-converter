@@ -38,7 +38,7 @@ module.exports = {
 
     // Logging configuration
     logging: {
-        level: 'info',
+        level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
         file: 'logs/app.log',
     },
 

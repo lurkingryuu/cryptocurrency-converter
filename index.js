@@ -3,46 +3,46 @@ const { uri } = require('./utils/db_uri')
 const { port, host } = require('./config/config')
 const app = require('./server')
 const { updateCoins } = require('./src/services/crypto_update.service')
+const logger = require('./utils/logger')
 
 let server
 
 mongoose.connect(uri()).then(() => {
-    console.log('Connected to MongoDB at', uri())
+    logger.info('Connected to MongoDB at', uri())
     server = app.listen(port, host, () => {
-        console.log(`Server is running on http://${host}:${port}`)
+        logger.info(`Server is running on http://${host}:${port}`)
     })
     updateCoins() // First time sync
 })
 const db = mongoose.connection
 
 db.on('error', (err) => {
-    console.error(err)
-    console.error('Failed to connect to MongoDB')
+    logger.error('Failed to connect to MongoDB with error:', err)
     process.exit(1)
 })
 
 db.on('disconnected', () => {
-    console.log('Lost MongoDB connection...')
+    logger.info('Lost MongoDB connection...')
     process.exit(1)
 })
 
 process.on('uncaughtException', (error) => {
-    console.error('Uncaught Exception:', error)
+    logger.error('Uncaught Exception:', error)
     process.exit(1)
 })
 
 process.on('unhandledRejection', (reason, promise) => {
-    console.error('Unhandled Rejection:', reason)
+    logger.error('Unhandled Rejection:', reason)
     process.exit(1)
 })
 
 process.on('SIGINT', () => {
     if (server) {
         server.close()
-        console.log('Server closed')
+        logger.info('Server closed')
     }
     db.close(() => {
-        console.log('MongoDB connection closed')
+        logger.info('MongoDB connection closed')
         process.exit(0)
     })
 })

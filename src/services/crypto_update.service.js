@@ -1,6 +1,7 @@
 const axios = require('axios')
 const { coingecko } = require('../../config/config')
 const Coin = require('../models/coin.model')
+const logger = require('../../utils/logger')
 
 const options = {
     method: 'GET',
@@ -13,7 +14,7 @@ const options = {
 }
 
 async function updateCoins() {
-    console.log('Updating coins...')
+    logger.info('Updating coins...')
     const response = await axios.request(options)
     const coins = response.data
     let num_coins = coins.length
@@ -22,7 +23,7 @@ async function updateCoins() {
         try {
             await Coin.findOneAndUpdate({ id: coin.id }, coin, { upsert: true })
         } catch (error) {
-            console.error(error)
+            logger.error(error)
         }
     })
 
@@ -30,7 +31,7 @@ async function updateCoins() {
     await Coin.deleteMany({ id: { $nin: coins.map((coin) => coin.id) } })
 
     let updated_coins = await Coin.countDocuments()
-    console.log(
+    logger.info(
         `Synchronized ${num_coins} coins in the database (${num_coins_db} -> ${updated_coins})`
     )
 
