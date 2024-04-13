@@ -20,9 +20,8 @@ jobs:
             - name: 'Install Dependencies'
               run: |
                   npm install
-
             - name: 'Azure webapp deploy'
               uses: azure/webapps-deploy@v2
               with:
-                  app-name: node-rn
+                  app-name: koinx
                   publish-profile: ${{ secrets.azureWebAppPublishProfile }}
