@@ -11,18 +11,13 @@ mongoose.connect(uri()).then(() => {
     logger.info('Connected to MongoDB at', uri())
     server = app.listen(port, host, () => {
         logger.info(`Server is running on http://${host}:${port}`)
+        updateCoins() // First time sync
     })
-    updateCoins() // First time sync
 })
 const db = mongoose.connection
 
 db.on('error', (err) => {
     logger.error('Failed to connect to MongoDB with error:', err)
-    process.exit(1)
-})
-
-db.on('disconnected', () => {
-    logger.info('Lost MongoDB connection...')
     process.exit(1)
 })
 
@@ -41,7 +36,7 @@ process.on('SIGINT', () => {
         server.close()
         logger.info('Server closed')
     }
-    db.close(() => {
+    db.close().then(() => {
         logger.info('MongoDB connection closed')
         process.exit(0)
     })

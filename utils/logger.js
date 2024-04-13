@@ -17,27 +17,46 @@ const colors = {
 }
 winston.addColors(colors)
 
-const format = winston.format.combine(
-    winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss:ms' }),
+const formatConsole = winston.format.combine(
+    winston.format.timestamp({ format: 'DD-MM-YYYY HH:mm:ss:ms' }),
     winston.format.colorize({ all: true }),
     winston.format.printf(
         (info) => `${info.timestamp} ${info.level}: ${info.message}`
     )
 )
 
-const transports = [
-    new winston.transports.Console(),
-    new winston.transports.File({
-        filename: logging.file,
+const formatFile = winston.format.combine(
+    winston.format.timestamp({ format: 'DD-MM-YYYY HH:mm:ss:ms' }),
+    winston.format.printf(
+        (info) => `${info.timestamp} ${info.level}: ${info.message}`
+    )
+)
+
+const options = {
+    file: {
         level: logging.level,
-    }),
+        filename: logging.file,
+        handleExceptions: true,
+        format: formatFile,
+        maxsize: 5242880, // 5MB
+        maxFiles: 5,
+    },
+    console: {
+        level: 'debug',
+        handleExceptions: true,
+        format: formatConsole,
+    },
+}
+
+const transports = [
+    new winston.transports.Console(options.console),
+    new winston.transports.File(options.file),
 ]
 
 const logger = winston.createLogger({
-    level: logging.level,
     levels,
-    format,
     transports,
+    exitOnError: false,
 })
 
 module.exports = logger
