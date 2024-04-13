@@ -41,4 +41,9 @@ module.exports = {
         level: 'info',
         file: 'logs/app.log',
     },
+
+    // cors configuration
+    cors: {
+        origin: process.env.CORS_ORIGIN || '*',
+    },
 }
